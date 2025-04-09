@@ -1,7 +1,7 @@
 import { DashboardHeader } from "@/components/dashboardHeader";
 import { TaskList } from "@/components/taskList";
 
-function Dashboard() {
+export const Dashboard = () => {
   return (
     <div>
       <DashboardHeader />
@@ -10,6 +10,6 @@ function Dashboard() {
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;

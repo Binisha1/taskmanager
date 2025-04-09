@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
 
-function Login() {
+export const Login = () => {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -79,6 +79,6 @@ function Login() {
       </Card>
     </div>
   );
-}
+};
 
 export default Login;

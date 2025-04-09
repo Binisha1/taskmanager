@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import { Plus, Trash } from "lucide-react";
 
@@ -28,24 +29,30 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useTasks } from "@/context/TaskContext";
 
-export function TaskList() {
+export const TaskList = () => {
   const { tasks, addTask, toggleTask, deleteTask } = useTasks();
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskDescription, setNewTaskDescription] = useState("");
+
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
     if (newTaskTitle.trim()) {
       addTask({
+        id: uuidv4(),
+        completed: false,
         title: newTaskTitle,
         description: newTaskDescription,
       });
       setNewTaskTitle("");
       setNewTaskDescription("");
+      setIsDialogOpen(false);
 
       setIsDialogOpen(false);
     }
   };
+
+  console.log("Tasks:", tasks);
 
   const pendingTasks = tasks.filter((task) => !task.completed);
   const completedTasks = tasks.filter((task) => task.completed);
@@ -56,8 +63,8 @@ export function TaskList() {
         <h1 className="text-3xl font-bold">My Tasks</h1>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-gradient-to-r from-black to-white text-white">
-              <Plus className="mr-2 h-4 w-4" />
+            <Button className="">
+              <Plus className="mr-2 h-4 w-4 text-green-500" />
               Add Task
             </Button>
           </DialogTrigger>
@@ -145,7 +152,7 @@ export function TaskList() {
                       <Checkbox
                         id={`task-${task.id}`}
                         checked={task.completed}
-                        onCheckedChange={() => toggleTask(task.id)}
+                        onCheckedChange={() => toggleTask(task.id!)}
                         className="mt-1"
                       />
                       <div className="flex-1 min-w-0">
@@ -164,8 +171,8 @@ export function TaskList() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => deleteTask(task.id)}
-                        className="text-muted-foreground hover:text-destructive"
+                        onClick={() => deleteTask(task.id!)}
+                        className="text-destructive hover:-translate-y-1 hover:text-destructive"
                       >
                         Delete
                       </Button>
@@ -214,17 +221,12 @@ export function TaskList() {
                             {task.description}
                           </p>
                         )}
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className="text-xs text-muted-foreground">
-                            {new Date(task.createdAt).toLocaleDateString()}
-                          </span>
-                        </div>
                       </div>
                       <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => deleteTask(task.id)}
-                        className="text-muted-foreground hover:text-destructive"
+                        className="text-destructive hover:-translate-y-1 hover:text-destructive"
                       >
                         Delete
                       </Button>
@@ -251,4 +253,4 @@ export function TaskList() {
       </Tabs>
     </div>
   );
-}
+};

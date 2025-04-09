@@ -6,6 +6,8 @@ const LogOut = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/");
     logout();
     navigate("/");
   };

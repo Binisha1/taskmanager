@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -14,23 +13,25 @@ import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
 
 function Login() {
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
     const res = await login(email, password);
-    if (res.success) {
+    if (res && res.success) {
       navigate("/tasks");
       window.location.reload();
-    } else {
+    } else if (res && res.message) {
       setError(res.message);
+    } else {
+      setError("An unexpected error occurred.");
     }
   };
 
@@ -60,11 +61,7 @@ function Login() {
             {error && <p className="text-sm text-red-500  ">{error}</p>}
 
             <div className="text-center">
-              <Button
-                onClick={handleSubmit}
-                className="text-white"
-                type="submit"
-              >
+              <Button className="text-white" type="submit">
                 Login
               </Button>
             </div>

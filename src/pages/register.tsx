@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -20,15 +19,17 @@ function Register() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     const res = await register(email, password);
-    if (res.success) {
+    if (res && res.success) {
       navigate("/");
-    } else {
+    } else if (res && res.message) {
       setError(res.message);
+    } else {
+      setError("An unknown error occurred.");
     }
   };
 

@@ -44,6 +44,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     setUser(data);
+
     return { success: true };
   };
 
@@ -53,6 +54,7 @@ export const AuthProvider = ({ children }) => {
       credentials: "include",
     });
     setUser(null);
+    window.location.reload();
   };
 
   return (

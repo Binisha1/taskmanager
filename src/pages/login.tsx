@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
@@ -14,7 +14,7 @@ import { Label } from "@radix-ui/react-label";
 import { Button } from "@/components/ui/button";
 
 function Login() {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ function Login() {
     const res = await login(email, password);
     if (res.success) {
       navigate("/tasks");
+      window.location.reload();
     } else {
       setError(res.message);
     }
@@ -59,7 +60,11 @@ function Login() {
             {error && <p className="text-sm text-red-500  ">{error}</p>}
 
             <div className="text-center">
-              <Button className="text-white" type="submit">
+              <Button
+                onClick={handleSubmit}
+                className="text-white"
+                type="submit"
+              >
                 Login
               </Button>
             </div>

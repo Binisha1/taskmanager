@@ -8,7 +8,9 @@ pnpm install
 ```
 
 ### 2. Run the app
-```pnpm run dev```
+```
+pnpm run dev
+```
 
 ### Backend of task manager
 https://github.com/Binisha1/taskmanagerBackend

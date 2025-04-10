@@ -14,3 +14,6 @@ pnpm run dev
 
 ### Backend of task manager
 https://github.com/Binisha1/taskmanagerBackend
+
+### Deployed link of task manager
+https://taskmanagerbini.vercel.app/
